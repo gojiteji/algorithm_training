@@ -3,8 +3,36 @@ using namespace std;
 
 class QUEUE
 {
-    int a;
+   private:
+    float* data;
+    int head,tail;
+    int size;
+   public:
+   QUEUE(unsigned int s);
+   void enqueue(float datumn);
+   float dequeue();
+   bool isEmpty();
+   bool isFull();
 };
+
+   QUEUE::QUEUE(unsigned int s){
+    data=new float[s];
+    this->size=s;
+    this->head=0;//最初のheadはつかう
+    this->tail=0;
+   }
+
+   void QUEUE::enqueue(float datumn){
+       if(tail==size)//maxの時に処理が来たら
+        tail=0;
+       this->data[tail++]=datumn;
+   }
+   float QUEUE::dequeue(){
+       if(head==size)//maxの時に処理が来たら
+              head=0;       
+       return this->data[head++];
+   }
+
 
 class STACK
 {
@@ -48,8 +76,32 @@ bool STACK::isFull()
 
 int main()
 {
+ 
+    QUEUE b(10);
+   for (int i=0;i<6;i++)
+        b.enqueue(i);
+    cout<<"empty:"<<b.isEmpty()<<endl;
+    cout<<"full:"<<b.isFull()<<endl;
+    for (int i=0;i<3;i++)
+        cout<<b.dequeue()<<endl;
+    cout<<"empty:"<<b.isEmpty()<<endl;
+    cout<<"full:"<<b.isFull()<<endl;
+   for (int i=0;i<7;i++)
+        b.enqueue(i);
+    cout<<"empty:"<<b.isEmpty()<<endl;
+    cout<<"full:"<<b.isFull()<<endl;
+    for (int i=0;i<8;i++)
+        cout<<b.dequeue()<<endl;
+    cout<<"empty:"<<b.isEmpty()<<endl;
+    cout<<"full:"<<b.isFull()<<endl;
+    for (int i=0;i<2;i++)
+        cout<<b.dequeue()<<endl;
+    cout<<"empty:"<<b.isEmpty()<<endl;
+    cout<<"full:"<<b.isFull()<<endl;
+
+
+/*
     STACK a(10);
-    QUEUE b;
     for (int i=0;i<10;i++)
         a.push(i);
     cout<<"empty:"<<a.isEmpty()<<endl;
@@ -58,6 +110,6 @@ int main()
         cout<<a.pop()<<endl;
     cout<<"empty:"<<a.isEmpty()<<endl;
     cout<<"full:"<<a.isFull()<<endl;
-
+*/
     return 0;
 }
