@@ -12,7 +12,7 @@ void quick(int array[10],int head,int tail){
             j--;
         if(i<=j){
         swap(array[i],array[j]);            
-        i++;//なくてもいいが一回ぶん処理が省ける
+        i++;//これないと等号で無限ループが発生。
         j--;
         }else{//重なることはない(i>j)
             //cout<<"array["<<i<<"]="<<array[i]<<","<<"array["<<j<<"]="<<array[j]<<endl;
