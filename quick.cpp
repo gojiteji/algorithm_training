@@ -1,66 +1,45 @@
 #include <iostream>
+#include <algorithm>
 using namespace std;
-
-void swap(int &a, int &b)
-{
-    int tmp = a;
-    a = b;
-    b = tmp;
-}
-
-void quicksort(int b[10], int head, int tail)
-{
-    int middle = b[(head + tail) / 2];
-    int i = head;
-    int j = tail;
-    while (1)
-    {
-        //まず左から攻める
-        while (b[i] < middle)
-            i++;
-        //hitしたらつずいて右から攻める
-        while (b[j] > middle)
+void quick(int array[10],int head,int tail){
+    int center=(head+tail)/2;
+    int i=head;
+    int j=tail;
+    while(true){
+        while(array[i]<array[center])//pivotは大きさの境界であって、位置の境界ではない!
+            i++;//array[i]=>array[center]が分岐条件
+        while(array[j]>array[center])
             j--;
-        if (i >= j)//移動後ピボットが交差したら
+        if(i<=j){
+        swap(array[i],array[j]);            
+        i++;//なくてもいいが一回ぶん処理が省ける
+        j--;
+        }else{//重なることはない(i>j)
+            //cout<<"array["<<i<<"]="<<array[i]<<","<<"array["<<j<<"]="<<array[j]<<endl;
             break;
-        //hit同士を交換
-        swap(b[i], b[j]);
-        //交換ごちゃんと次に進む
-        i++;
-        j++;
-
+        }
+    }
+    if(j-head>0){//2個以上の要素(自然数の差が存在)
+    quick(array,head,j);
+    }
+    if(tail-i>0){
+    quick(array,i,tail);
     }
 
-    //再帰
-    //右に比較できる要素があれば
-    if (i - head >1)
-        quicksort(b, head, i - 1); //前半。ピボット交差breakでi>jとなああっているので引く。
-    //左に比較できる要素があれば
-    if (tail - j >1)
-        quicksort(b, j + 1, tail); //後半。ピボット交差breakでi>jとなああっているので足す。
 }
+//image:区間をどんどん分割していく
+//注意：区切りは交差した配列間であり、pivotではない。
 
-int main()
-{
-    int a[10];
 
-    for (int i = 0; i < 10; i++)
-    {
-        cin >> a[i];
-    }
-    cout << "before:";
-    for (int i = 0; i < 10; i++)
-    {
-        cout << a[i] << " ";
-    }
-    cout << endl;
 
-    quicksort(a, 0, 9);
+int main(){
+    int array[7];
+    for(int i=0;i<7;i++)
+    cin>>array[i];
+    quick(array,0,6);
+ 
+    for(int i=0;i<7;i++)
+    cout<<array[i]<<" ";
 
-    cout << "after:";
-    for (int i = 0; i < 10; i++)
-    {
-        cout << a[i] << " ";
-    }
     return 0;
 }
